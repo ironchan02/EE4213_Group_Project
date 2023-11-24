@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 tabLayout.selectTab( tabLayout.getTabAt( position ) );
+                viewPager.setUserInputEnabled( position != 2 );
             }
         });
         viewPager.setUserInputEnabled(false);
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem( tab.getPosition() );
+                viewPager.setUserInputEnabled( tab.getPosition() != 2 );
             }
 
             @Override
