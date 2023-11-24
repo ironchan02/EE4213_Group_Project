@@ -43,12 +43,10 @@ import com.iron.ee4213.Group.R;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
-import java.net.ContentHandler;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -62,6 +60,8 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
     private MyLocationNewOverlay myLocationNewOverlay;
     private RotationGestureOverlay rotationGestureOverlay;
     private Polyline route;
+
+    private final List<Marker> markerList = new ArrayList<>();
 
 
     public MapFragment() {
@@ -101,6 +101,7 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
                         Context.MODE_PRIVATE
                 )
         );
+
         map = view.findViewById(R.id.osmmap);
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.getMapCenter();
@@ -129,21 +130,9 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
         controller.setZoom( 18.0 );
 
 
+        initMarkerList();
 
-
-        List<Pair<GeoPoint, Integer>> pairList = new ArrayList<Pair<GeoPoint, Integer>>(){{
-            add(new Pair<>(new GeoPoint(22.336581921887568, 114.17251346222527), R.drawable.recycle));
-            add(new Pair<>(new GeoPoint(22.33659006927164, 114.17291609498238), R.drawable.paper));
-            add(new Pair<>(new GeoPoint(22.33650751165865, 114.1733020729623), R.drawable.recycle));
-            add(new Pair<>(new GeoPoint(22.33615526024503, 114.17309218402544), R.drawable.paper));
-            add(new Pair<>(new GeoPoint(22.336026250105228, 114.17312437053373), R.drawable.recycle));
-            add(new Pair<>(new GeoPoint(22.335789333055335, 114.17371484798878), R.drawable.paper));
-
-        }};
-
-        for ( Pair<GeoPoint, Integer> pair : pairList )
-            trashMarkerGenerator(pair.first, pair.second);
-
+        markerList.forEach( marker -> map.getOverlays().add(marker) );
 
 
         List<Overlay> list = map.getOverlays();
@@ -154,7 +143,21 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
         return view;
     }
 
-    public void trashMarkerGenerator(GeoPoint geoPoint, @DrawableRes int id) {
+    private void initMarkerList() {
+        List<Pair<GeoPoint, Integer>> pairList = new ArrayList<Pair<GeoPoint, Integer>>(){{
+            add(new Pair<>(new GeoPoint(22.336581921887568, 114.17251346222527), R.drawable.recycle));
+            add(new Pair<>(new GeoPoint(22.33659006927164, 114.17291609498238), R.drawable.paper));
+            add(new Pair<>(new GeoPoint(22.33650751165865, 114.1733020729623), R.drawable.recycle));
+            add(new Pair<>(new GeoPoint(22.33615526024503, 114.17309218402544), R.drawable.paper));
+            add(new Pair<>(new GeoPoint(22.336026250105228, 114.17312437053373), R.drawable.recycle));
+            add(new Pair<>(new GeoPoint(22.335789333055335, 114.17371484798878), R.drawable.paper));
+        }};
+
+        pairList.forEach( pair -> markerList.add( markerGenerator( pair.first, pair.second ) ));
+    }
+
+    
+    public Marker markerGenerator(GeoPoint geoPoint, @DrawableRes int id) {
         Marker marker = new Marker(map);
         marker.setPosition( geoPoint );
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
@@ -173,7 +176,7 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
             }
             return true;
         });
-        map.getOverlays().add(marker);
+        return marker;
     }
 
     private Thread getDrawRouteThread(GeoPoint start, GeoPoint end) {
