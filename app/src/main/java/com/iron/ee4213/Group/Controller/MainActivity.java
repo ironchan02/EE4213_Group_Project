@@ -3,6 +3,11 @@ package com.iron.ee4213.Group.Controller;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -75,11 +80,14 @@ public class MainActivity extends AppCompatActivity {
     private void initTabLayoutItem() {
         tabTitles.forEach(title -> {
             TabLayout.Tab tab = tabLayout.newTab();
-            TextView textView = new TextView(this);
+            View customView = LayoutInflater.from(this).inflate(R.layout.custom_tabitem, null);
+            TextView textView = customView.findViewById(R.id.tabName);
+            ImageView imageView = customView.findViewById(R.id.tabIcon);
             textView.setText(title);
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
-            textView.setGravity(Gravity.CENTER);
-            tab.setCustomView(textView);
+            imageView.setImageResource(R.drawable.map_icon);
+            tab.setCustomView(customView);
+            customView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             tabLayout.addTab(tab);
         });
     }
