@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,10 +17,14 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.GpsStatus;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.SearchView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -39,6 +45,7 @@ import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import static android.Manifest.permission.*;
 
+import com.iron.ee4213.Group.Adapter.BinSearchAdapter;
 import com.iron.ee4213.Group.Entity.BinMarkerEntity;
 import com.iron.ee4213.Group.R;
 
@@ -61,6 +68,9 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
     private MyLocationNewOverlay myLocationNewOverlay;
     private RotationGestureOverlay rotationGestureOverlay;
     private Polyline route;
+    private SearchView searchView;
+
+    private RecyclerView searchResult;
 
     private final List<BinMarkerEntity> binMarkerEntityList = new ArrayList<>();
 
@@ -129,12 +139,14 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
         map.setMultiTouchControls(true);
 
         controller.setZoom( 18.0 );
-
-
         initMarkerList();
+        binMarkerEntityList.forEach(entity -> map.getOverlays().add(entity.getMarker()));
 
-        binMarkerEntityList.forEach(entity -> map.getOverlays().add(entity.getMarker()) );
-
+        searchView = view.findViewById(R.id.searchBar);
+        searchResult = view.findViewById(R.id.searchResult);
+        searchResult.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        BinSearchAdapter binSearchAdapter = new BinSearchAdapter(binMarkerEntityList, myLocationNewOverlay);
+        searchResult.setAdapter(binSearchAdapter);
 
         List<Overlay> list = map.getOverlays();
         list.add(myLocationNewOverlay);
