@@ -39,6 +39,7 @@ import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import static android.Manifest.permission.*;
 
+import com.iron.ee4213.Group.Entity.BinMarkerEntity;
 import com.iron.ee4213.Group.R;
 
 import java.io.BufferedInputStream;
@@ -61,7 +62,7 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
     private RotationGestureOverlay rotationGestureOverlay;
     private Polyline route;
 
-    private final List<Marker> markerList = new ArrayList<>();
+    private final List<BinMarkerEntity> binMarkerEntityList = new ArrayList<>();
 
 
     public MapFragment() {
@@ -132,7 +133,7 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
 
         initMarkerList();
 
-        markerList.forEach( marker -> map.getOverlays().add(marker) );
+        binMarkerEntityList.forEach(entity -> map.getOverlays().add(entity.getMarker()) );
 
 
         List<Overlay> list = map.getOverlays();
@@ -144,16 +145,12 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
     }
 
     private void initMarkerList() {
-        List<Pair<GeoPoint, Integer>> pairList = new ArrayList<Pair<GeoPoint, Integer>>(){{
-            add(new Pair<>(new GeoPoint(22.336581921887568, 114.17251346222527), R.drawable.recycle));
-            add(new Pair<>(new GeoPoint(22.33659006927164, 114.17291609498238), R.drawable.paper));
-            add(new Pair<>(new GeoPoint(22.33650751165865, 114.1733020729623), R.drawable.recycle));
-            add(new Pair<>(new GeoPoint(22.33615526024503, 114.17309218402544), R.drawable.paper));
-            add(new Pair<>(new GeoPoint(22.336026250105228, 114.17312437053373), R.drawable.recycle));
-            add(new Pair<>(new GeoPoint(22.335789333055335, 114.17371484798878), R.drawable.paper));
-        }};
-
-        pairList.forEach( pair -> markerList.add( markerGenerator( pair.first, pair.second ) ));
+        binMarkerEntityList.add(new BinMarkerEntity(markerGenerator(new GeoPoint(22.336581921887568, 114.17251346222527), R.drawable.recycle)));
+        binMarkerEntityList.add(new BinMarkerEntity(markerGenerator(new GeoPoint(22.33659006927164, 114.17291609498238), R.drawable.paper)));
+        binMarkerEntityList.add(new BinMarkerEntity(markerGenerator(new GeoPoint(22.33650751165865, 114.1733020729623), R.drawable.recycle)));
+        binMarkerEntityList.add(new BinMarkerEntity(markerGenerator(new GeoPoint(22.33615526024503, 114.17309218402544), R.drawable.paper)));
+        binMarkerEntityList.add(new BinMarkerEntity(markerGenerator(new GeoPoint(22.336026250105228, 114.17312437053373), R.drawable.recycle)));
+        binMarkerEntityList.add(new BinMarkerEntity(markerGenerator(new GeoPoint(22.335789333055335, 114.17371484798878), R.drawable.paper)));
     }
 
     
