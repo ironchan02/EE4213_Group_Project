@@ -20,7 +20,7 @@ public class FragmentAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         return switch (position) {
-            case 3 -> new MapFragment();
+            case 2 -> new MapFragment();
             default -> new HomeFragment();
         };
     }
