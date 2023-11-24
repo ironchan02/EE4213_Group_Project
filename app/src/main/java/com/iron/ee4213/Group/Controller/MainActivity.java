@@ -1,7 +1,12 @@
 package com.iron.ee4213.Group.Controller;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.widget.TextView;
 
+import androidx.annotation.GravityInt;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -9,6 +14,10 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.iron.ee4213.Group.Adapter.FragmentAdapter;
 import com.iron.ee4213.Group.R;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -47,13 +56,26 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        
+        initTabLayoutItem();
+    }
 
-        tabLayout.addTab( tabLayout.newTab().setText("Home") );
-        tabLayout.addTab( tabLayout.newTab().setText("Recycle") );
-        tabLayout.addTab( tabLayout.newTab().setText("Map") );
-        tabLayout.addTab( tabLayout.newTab().setText("Guide") );
-        tabLayout.addTab( tabLayout.newTab().setText("More") );
+    private void initTabLayoutItem() {
+        List<String> tabTitle = new ArrayList<>() {{
+            add("Home");
+            add("Recycle");
+            add("Map");
+            add("Guide");
+            add("More");
+        }};
+        tabTitle.forEach( title -> {
+            TabLayout.Tab tab = tabLayout.newTab();
+            TextView textView = new TextView(this);
+            textView.setText(title);
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+            textView.setGravity(Gravity.CENTER);
+            tab.setCustomView(textView);
+            tabLayout.addTab(tab);
+        });
     }
 
 }
