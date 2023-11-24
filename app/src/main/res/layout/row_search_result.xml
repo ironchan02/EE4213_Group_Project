@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="3dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+
+        <ImageView
+            android:id="@+id/iconLocation"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_launcher_foreground" />
+
+        <ImageView
+            android:id="@+id/imgRecycleType2"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="48dp"
+            app:layout_constraintStart_toEndOf="@+id/imgRecycleType1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/recycle" />
+
+        <ImageView
+            android:id="@+id/imgRecycleType1"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/recycle" />
+
+        <ImageView
+            android:id="@+id/imgRecycleType3"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="48dp"
+            app:layout_constraintStart_toEndOf="@+id/imgRecycleType2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/recycle" />
+
+        <ImageView
+            android:id="@+id/imgRecycleType4"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="48dp"
+            app:layout_constraintStart_toEndOf="@+id/imgRecycleType3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/recycle" />
+
+        <TextView
+            android:id="@+id/textLocationName"
+            android:layout_width="240dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/iconLocation"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textLocationString"
+            android:layout_width="240dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="4dp"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="@+id/textLocationName"
+            app:layout_constraintTop_toBottomOf="@+id/textLocationName" />
+
+        <TextView
+            android:id="@+id/textDistance"
+            android:layout_width="84dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/textLocationString"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
