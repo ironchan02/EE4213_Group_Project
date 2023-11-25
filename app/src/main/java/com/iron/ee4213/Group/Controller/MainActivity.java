@@ -47,20 +47,18 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), getLifecycle());
         viewPager.setAdapter(fragmentAdapter);
+        viewPager.setUserInputEnabled(false);
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 tabLayout.selectTab( tabLayout.getTabAt( position ) );
-                viewPager.setUserInputEnabled( position != 2 );
                 toolbar.setTitle(tabTitles.get(position));
             }
         });
-        viewPager.setUserInputEnabled(false);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem( tab.getPosition() );
-                viewPager.setUserInputEnabled( tab.getPosition() != 2 );
                 toolbar.setTitle(tabTitles.get(tab.getPosition()));
             }
 
