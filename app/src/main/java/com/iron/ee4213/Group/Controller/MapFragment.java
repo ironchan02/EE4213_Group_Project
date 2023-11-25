@@ -10,17 +10,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.GpsStatus;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -45,7 +50,7 @@ import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import static android.Manifest.permission.*;
 
-import com.iron.ee4213.Group.Adapter.BinSearchAdapter;
+import com.iron.ee4213.Group.Adapter.BinMarkerEntityAdapter;
 import com.iron.ee4213.Group.Entity.BinMarkerEntity;
 import com.iron.ee4213.Group.R;
 
@@ -80,6 +85,7 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
     }
 
 
+    @SuppressLint("MissingPermission")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +132,16 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
         myLocationNewOverlay.enableFollowLocation();
         myLocationNewOverlay.setDrawAccuracyEnabled( true );
 
+        LocationListener locationListener = location -> {
+            if (myLocationNewOverlay.isFollowLocationEnabled())
+                myLocationNewOverlay.disableFollowLocation();
+        };
+
+        LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
+
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        }
         myLocationNewOverlay.runOnFirstFix(() -> requireActivity().runOnUiThread(() -> {
             controller.setCenter(myLocationNewOverlay.getMyLocation());
             controller.setCenter(myLocationNewOverlay.getMyLocation());
@@ -143,10 +159,36 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
         binMarkerEntityList.forEach(entity -> map.getOverlays().add(entity.getMarker()));
 
         searchView = view.findViewById(R.id.searchBar);
+        searchView.setFocusable(true);
+        searchView.setFocusableInTouchMode(true);
+
+        map.setOnTouchListener((view1, motionEvent) -> {
+            Log.e("Iron","detected");
+            searchResult.setVisibility(View.INVISIBLE);
+            return false;
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                BinMarkerEntityAdapter binMarkerEntityAdapter = new BinMarkerEntityAdapter(
+                        binMarkerEntityList,
+                        myLocationNewOverlay.getMyLocation(),
+                        map
+                );
+                searchResult.setAdapter(binMarkerEntityAdapter);
+                searchResult.setVisibility(View.VISIBLE);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return true;
+            }
+        });
+
         searchResult = view.findViewById(R.id.searchResult);
         searchResult.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        BinSearchAdapter binSearchAdapter = new BinSearchAdapter(binMarkerEntityList, myLocationNewOverlay);
-        searchResult.setAdapter(binSearchAdapter);
 
         List<Overlay> list = map.getOverlays();
         list.add(myLocationNewOverlay);

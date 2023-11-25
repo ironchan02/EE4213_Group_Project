@@ -10,14 +10,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp">
+        android:layout_height="89dp">
 
         <ImageView
             android:id="@+id/iconLocation"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_launcher_foreground" />
@@ -26,29 +26,9 @@
             android:id="@+id/imgRecycleType2"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="48dp"
-            app:layout_constraintStart_toEndOf="@+id/imgRecycleType1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/recycle" />
-
-        <ImageView
-            android:id="@+id/imgRecycleType1"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="48dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/recycle" />
-
-        <ImageView
-            android:id="@+id/imgRecycleType3"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="48dp"
-            app:layout_constraintStart_toEndOf="@+id/imgRecycleType2"
+            android:layout_marginTop="64dp"
+            app:layout_constraintStart_toEndOf="@+id/imgRecycleType1"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/recycle" />
 
@@ -56,9 +36,29 @@
             android:id="@+id/imgRecycleType4"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="64dp"
             app:layout_constraintStart_toEndOf="@+id/imgRecycleType3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/recycle" />
+
+        <ImageView
+            android:id="@+id/imgRecycleType3"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="64dp"
+            app:layout_constraintStart_toEndOf="@+id/imgRecycleType2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/recycle" />
+
+        <ImageView
+            android:id="@+id/imgRecycleType1"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="64dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/recycle" />
 
@@ -69,6 +69,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="TextView"
+            android:textSize="10sp"
             app:layout_constraintStart_toEndOf="@+id/iconLocation"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -78,6 +79,7 @@
             android:layout_height="16dp"
             android:layout_marginTop="4dp"
             android:text="TextView"
+            android:textSize="8sp"
             app:layout_constraintStart_toStartOf="@+id/textLocationName"
             app:layout_constraintTop_toBottomOf="@+id/textLocationName" />
 

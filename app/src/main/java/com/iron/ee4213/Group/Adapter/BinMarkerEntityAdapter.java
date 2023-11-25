@@ -1,11 +1,8 @@
 package com.iron.ee4213.Group.Adapter;
 
-import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CursorAdapter;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,31 +12,36 @@ import com.iron.ee4213.Group.Entity.BinMarkerEntity;
 import com.iron.ee4213.Group.R;
 
 import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
-import org.w3c.dom.Text;
 
 import java.util.List;
 
-public class BinSearchAdapter extends RecyclerView.Adapter<BinSearchAdapter.ViewHolder> {
+public class BinMarkerEntityAdapter extends RecyclerView.Adapter<BinMarkerEntityAdapter.ViewHolder> {
     private final List<BinMarkerEntity> binMarkerEntityList;
-    private final MyLocationNewOverlay myLocationNewOverlay;
-    public BinSearchAdapter(List<BinMarkerEntity> binMarkerEntityList, MyLocationNewOverlay myLocationNewOverlay) {
+    private final GeoPoint currentLocation;
+    private final MapView map;
+
+    public BinMarkerEntityAdapter(List<BinMarkerEntity> binMarkerEntityList, GeoPoint currentLocation, MapView map) {
         this.binMarkerEntityList = binMarkerEntityList;
-        this.myLocationNewOverlay = myLocationNewOverlay;
+        this.currentLocation = currentLocation;
+        this.map = map;
     }
 
 
     @NonNull
     @Override
-    public BinSearchAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BinMarkerEntityAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_search_result, parent, false);
-        return new ViewHolder(view, myLocationNewOverlay.getMyLocation());
+        return new ViewHolder(view, currentLocation);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BinSearchAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BinMarkerEntityAdapter.ViewHolder holder, int position) {
         BinMarkerEntity binMarkerEntity = binMarkerEntityList.get(position);
+        holder.itemView.setOnClickListener(view -> map.getController().animateTo(binMarkerEntity.getMarker().getPosition()));
+
         holder.bind(binMarkerEntity);
     }
 
@@ -66,9 +68,9 @@ public class BinSearchAdapter extends RecyclerView.Adapter<BinSearchAdapter.View
             Marker marker = binMarkerEntity.getMarker();
             binName.setText(marker.getTitle());
             binDescription.setText(marker.getTitle());
-            //double distance = currentGeo.distanceToAsDouble( marker.getPosition() );
-            //binDistance.setText(String.valueOf(  Math.round( distance ) ));
-            binDistance.setText("0m");
+            double distance = currentGeo.distanceToAsDouble( marker.getPosition() );
+            long m = Math.round( distance );
+            binDistance.setText( m > 500 ? (m/1000) + "km" : m + "km" );
         }
     }
 }
