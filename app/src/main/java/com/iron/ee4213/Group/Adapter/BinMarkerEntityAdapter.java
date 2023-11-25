@@ -3,6 +3,7 @@ package com.iron.ee4213.Group.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -55,22 +56,33 @@ public class BinMarkerEntityAdapter extends RecyclerView.Adapter<BinMarkerEntity
         private TextView binDescription;
         private TextView binDistance;
         private GeoPoint currentGeo;
+        private ImageView paper, plastic, metal, largeLitter, litter;
 
         public ViewHolder(@NonNull View view, GeoPoint currentGeo) {
             super(view);
             binName = view.findViewById(R.id.textLocationName);
             binDescription = view.findViewById(R.id.textLocationString);
             binDistance = view.findViewById(R.id.textDistance);
+            paper = view.findViewById(R.id.paperIcon);
+            plastic = view.findViewById(R.id.plasticIcon);
+            metal = view.findViewById(R.id.metalIcon);
+            largeLitter = view.findViewById(R.id.largeLitterIcon);
+            litter = view.findViewById(R.id.litterIcon);
             this.currentGeo = currentGeo;
         }
 
         public void bind(BinMarkerEntity binMarkerEntity) {
             Marker marker = binMarkerEntity.getMarker();
-            binName.setText(marker.getTitle());
-            binDescription.setText(marker.getTitle());
+            binName.setText(binMarkerEntity.getBinName());
+            binDescription.setText(binMarkerEntity.getBinDescription());
             double distance = currentGeo.distanceToAsDouble( marker.getPosition() );
             long m = Math.round( distance );
             binDistance.setText( m > 500 ? (m/1000) + "km" : m + "km" );
+            paper.setVisibility( binMarkerEntity.isAcceptPaper() ? View.VISIBLE : View.GONE );
+            plastic.setVisibility( binMarkerEntity.isAcceptPlastic() ? View.VISIBLE : View.GONE );
+            metal.setVisibility( binMarkerEntity.isAcceptMetal() ? View.VISIBLE : View.GONE );
+            largeLitter.setVisibility( binMarkerEntity.isAcceptLarge() ? View.VISIBLE : View.GONE );
+            litter.setVisibility( binMarkerEntity.isAcceptLitter() ? View.VISIBLE : View.GONE );
         }
     }
 }

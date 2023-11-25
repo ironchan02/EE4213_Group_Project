@@ -12,6 +12,52 @@
         android:layout_width="match_parent"
         android:layout_height="89dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/plasticIcon"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="64dp"
+                app:srcCompat="@drawable/plastic_icon" />
+
+            <ImageView
+                android:id="@+id/largeLitterIcon"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="64dp"
+                app:srcCompat="@drawable/large_litter_icon" />
+
+            <ImageView
+                android:id="@+id/litterIcon"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="64dp"
+                app:srcCompat="@drawable/litter_icon" />
+
+            <ImageView
+                android:id="@+id/metalIcon"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="64dp"
+                app:srcCompat="@drawable/metal_icon" />
+
+            <ImageView
+                android:id="@+id/paperIcon"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="64dp"
+                app:srcCompat="@drawable/paper_icon" />
+        </LinearLayout>
+
         <ImageView
             android:id="@+id/iconLocation"
             android:layout_width="35dp"
@@ -21,46 +67,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_launcher_foreground" />
-
-        <ImageView
-            android:id="@+id/imgRecycleType2"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="64dp"
-            app:layout_constraintStart_toEndOf="@+id/imgRecycleType1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/recycle" />
-
-        <ImageView
-            android:id="@+id/imgRecycleType4"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="64dp"
-            app:layout_constraintStart_toEndOf="@+id/imgRecycleType3"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/recycle" />
-
-        <ImageView
-            android:id="@+id/imgRecycleType3"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="64dp"
-            app:layout_constraintStart_toEndOf="@+id/imgRecycleType2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/recycle" />
-
-        <ImageView
-            android:id="@+id/imgRecycleType1"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="64dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/recycle" />
 
         <TextView
             android:id="@+id/textLocationName"

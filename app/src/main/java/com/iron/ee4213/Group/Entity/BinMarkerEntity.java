@@ -6,14 +6,19 @@ import org.osmdroid.views.overlay.Marker;
 public class BinMarkerEntity {
 
     private Marker marker;
+
+    private String binName;
+    private String binDescription;
     private boolean isAcceptPaper;
     private boolean isAcceptPlastic;
     private boolean isAcceptMetal;
     private boolean isAcceptLitter;
     private boolean isAcceptLarge;
 
-    public BinMarkerEntity(Marker marker, boolean isAcceptPaper, boolean isAcceptPlastic, boolean isAcceptMetal, boolean isAcceptLitter, boolean isAcceptLarge) {
+    public BinMarkerEntity(Marker marker, String binName, String binDescription, boolean isAcceptPaper, boolean isAcceptPlastic, boolean isAcceptMetal, boolean isAcceptLitter, boolean isAcceptLarge) {
         this.marker = marker;
+        this.binName = binName;
+        this.binDescription = binDescription;
         this.isAcceptPaper = isAcceptPaper;
         this.isAcceptPlastic = isAcceptPlastic;
         this.isAcceptMetal = isAcceptMetal;
@@ -21,8 +26,8 @@ public class BinMarkerEntity {
         this.isAcceptLarge = isAcceptLarge;
     }
 
-    public BinMarkerEntity(Marker marker) {
-        this(marker, false, false, false, false, false);
+    public BinMarkerEntity(Marker marker, String binName, String binDescription) {
+        this(marker, binName, binDescription, false, false, false, false, false);
     }
 
     public Marker getMarker() {
@@ -71,5 +76,21 @@ public class BinMarkerEntity {
 
     public void setAcceptLarge(boolean acceptLarge) {
         isAcceptLarge = acceptLarge;
+    }
+
+    public String getBinName() {
+        return binName;
+    }
+
+    public void setBinName(String binName) {
+        this.binName = binName;
+    }
+
+    public String getBinDescription() {
+        return binDescription;
+    }
+
+    public void setBinDescription(String binDescription) {
+        this.binDescription = binDescription;
     }
 }
