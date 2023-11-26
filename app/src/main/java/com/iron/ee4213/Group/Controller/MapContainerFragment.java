@@ -39,7 +39,6 @@ public class MapContainerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_map_container, container, false);
         mapTab = view.findViewById(R.id.mapTab);
         mapViewPager = view.findViewById(R.id.mapViewPager);
-        mapViewPager.setOffscreenPageLimit(3);
         MapFragmentAdapter mapFragmentAdapter = new MapFragmentAdapter(requireActivity().getSupportFragmentManager(), requireActivity().getLifecycle(), binMarkerEntityList, mapViewPager);
         mapViewPager.setAdapter(mapFragmentAdapter);
         mapViewPager.setUserInputEnabled(false);
@@ -49,6 +48,7 @@ public class MapContainerFragment extends Fragment {
                 mapTab.selectTab(mapTab.getTabAt(position));
             }
         });
+        mapViewPager.setOffscreenPageLimit(mapViewPager.getChildCount());
 
         mapTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

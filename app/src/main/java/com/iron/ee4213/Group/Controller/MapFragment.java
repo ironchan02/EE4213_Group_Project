@@ -211,7 +211,7 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
         binMarkerEntityList.add(new BinMarkerEntity(markerGenerator(new GeoPoint(22.33650751165865, 114.1733020729623), R.drawable.recycle), "Bin 3", "Container", false, false, true, true, false));
         binMarkerEntityList.add(new BinMarkerEntity(markerGenerator(new GeoPoint(22.33615526024503, 114.17309218402544), R.drawable.paper), "Bin 4", "Container", true, true, false, true, false));
         binMarkerEntityList.add(new BinMarkerEntity(markerGenerator(new GeoPoint(22.336026250105228, 114.17312437053373), R.drawable.recycle), "Bin 5", "Container", true, true, true, true, true));
-        binMarkerEntityList.add(new BinMarkerEntity(markerGenerator(new GeoPoint(22.335789333055335, 114.17371484798878), R.drawable.paper), "Bin 6", "Container", false, false, false, false, true));
+        binMarkerEntityList.add(new BinMarkerEntity(markerGenerator(new GeoPoint(22.37362528967345, 113.9630074660293), R.drawable.paper), "Bin 6", "Container", true, false, false, false, false));
     }
 
     
@@ -219,7 +219,7 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
         Marker marker = new Marker(map);
         marker.setPosition( geoPoint );
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
-        marker.setTitle("LoL");
+        marker.setTitle("A good Paper recycle bin");
         Drawable d = ResourcesCompat.getDrawable(getResources(), id, null);
         Bitmap bm = ((BitmapDrawable) d).getBitmap();
         Drawable dr = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bm, (int) (15.0f * getResources().getDisplayMetrics().density), (int) (15.0f * getResources().getDisplayMetrics().density), true));

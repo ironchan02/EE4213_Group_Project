@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabBar);
         viewPager = findViewById(R.id.viewPager);
         toolbar = findViewById(R.id.toolbar);
-
         MainFragmentAdapter fragmentAdapter = new MainFragmentAdapter(getSupportFragmentManager(), getLifecycle());
         viewPager.setAdapter(fragmentAdapter);
         viewPager.setUserInputEnabled(false);
@@ -54,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 toolbar.setTitle(tabTitles.get(position));
             }
         });
+        viewPager.setOffscreenPageLimit(viewPager.getChildCount());
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
