@@ -41,12 +41,7 @@ public class BinMarkerEntityAdapter extends RecyclerView.Adapter<BinMarkerEntity
     @Override
     public void onBindViewHolder(@NonNull BinMarkerEntityAdapter.ViewHolder holder, int position) {
         BinMarkerEntity binMarkerEntity = binMarkerEntityList.get(position);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickListener.onClick(binMarkerEntity);
-            }
-        });
+        holder.itemView.setOnClickListener(view -> clickListener.onClick(binMarkerEntity));
 
         holder.bind(binMarkerEntity);
     }

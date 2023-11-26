@@ -29,6 +29,10 @@ public class MapContainerFragment extends Fragment {
         super(R.layout.fragment_map_container);
     }
 
+    public ViewPager2 getMapViewPager() {
+        return mapViewPager;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,7 +40,7 @@ public class MapContainerFragment extends Fragment {
         mapTab = view.findViewById(R.id.mapTab);
         mapViewPager = view.findViewById(R.id.mapViewPager);
         mapViewPager.setOffscreenPageLimit(3);
-        MapFragmentAdapter mapFragmentAdapter = new MapFragmentAdapter(requireActivity().getSupportFragmentManager(), requireActivity().getLifecycle(), binMarkerEntityList);
+        MapFragmentAdapter mapFragmentAdapter = new MapFragmentAdapter(requireActivity().getSupportFragmentManager(), requireActivity().getLifecycle(), binMarkerEntityList, mapViewPager);
         mapViewPager.setAdapter(mapFragmentAdapter);
         mapViewPager.setUserInputEnabled(false);
         mapViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {

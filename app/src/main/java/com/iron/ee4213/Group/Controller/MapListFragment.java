@@ -6,6 +6,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.iron.ee4213.Group.Adapter.BinMarkerEntityAdapter;
 import com.iron.ee4213.Group.Entity.BinMarkerEntity;
@@ -30,9 +33,12 @@ public class MapListFragment extends Fragment {
     private RecyclerView recycler;
     private List<BinMarkerEntity> binMarkerEntityList;
 
-    public MapListFragment(List<BinMarkerEntity> binMarkerEntityList) {
+    private final ViewPager2 viewPager2;
+
+    public MapListFragment(List<BinMarkerEntity> binMarkerEntityList, ViewPager2 viewPager2) {
         super(R.layout.fragment_map_list);
         this.binMarkerEntityList = binMarkerEntityList;
+        this.viewPager2 = viewPager2;
     }
 
     @Nullable
@@ -49,6 +55,9 @@ public class MapListFragment extends Fragment {
             BinMarkerEntityAdapter binMarkerEntityAdapter = new BinMarkerEntityAdapter(binMarkerEntityList, new GeoPoint(latitude, longitude), new BinMarkerEntityAdapter.OnItemClickListener() {
                 @Override
                 public void onClick(BinMarkerEntity binMarkerEntity) {
+                    MapFragment mapFragment = (MapFragment) ((FragmentStateAdapter)viewPager2.getAdapter()).createFragment(0);
+                    mapFragment.setNav(binMarkerEntity.getMarker().getPosition());
+                    viewPager2.setCurrentItem(0, true);
 
                 }
             });
@@ -56,7 +65,6 @@ public class MapListFragment extends Fragment {
 
         };
 
-        // Check if the location permission is granted
         if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);

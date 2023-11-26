@@ -28,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 
@@ -70,14 +71,14 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
     private MapView map;
     private IMapController controller;
     private CompassOverlay compassOverlay;
+    private Button myLocate;
     private MyLocationNewOverlay myLocationNewOverlay;
     private RotationGestureOverlay rotationGestureOverlay;
     private Polyline route;
     private SearchView searchView;
-
     private RecyclerView searchResult;
-
     private List<BinMarkerEntity> binMarkerEntityList;
+    private GeoPoint nav = null;
 
 
     public MapFragment(List<BinMarkerEntity> binMarkerEntityList) {
@@ -165,7 +166,6 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
         searchView.setFocusableInTouchMode(true);
 
         map.setOnTouchListener((view1, motionEvent) -> {
-            Log.e("Iron","detected");
             searchResult.setVisibility(View.INVISIBLE);
             return false;
         });
@@ -197,6 +197,11 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
         list.add(compassOverlay);
         list.add(rotationGestureOverlay);
         map.addMapListener(this);
+
+        myLocate = view.findViewById(R.id.myLocate);
+        myLocate.setOnClickListener(view12 -> controller.animateTo(myLocationNewOverlay.getMyLocation()));
+
+
         return view;
     }
 
@@ -282,8 +287,14 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
     @Override
     public void onResume() {
         super.onResume();
-        if ( map != null )
+        if ( map != null ) {
             map.onResume();
+            if ( nav != null ) {
+                controller.animateTo(nav);
+                nav = null;
+            }
+        }
+
     }
 
     @Override
@@ -293,5 +304,8 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
             map.onPause();
     }
 
-
+    public void setNav(GeoPoint nav) {
+        this.nav = nav;
+        Log.e("Iron", String.valueOf(nav == null));
+    }
 }

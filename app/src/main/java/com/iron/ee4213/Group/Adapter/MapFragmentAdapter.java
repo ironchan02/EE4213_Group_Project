@@ -1,12 +1,11 @@
 package com.iron.ee4213.Group.Adapter;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.iron.ee4213.Group.Controller.HomeFragment;
 import com.iron.ee4213.Group.Controller.MapFragment;
@@ -19,20 +18,23 @@ public class MapFragmentAdapter extends FragmentStateAdapter {
 
     private List<BinMarkerEntity> binMarkerEntityList;
 
-    public MapFragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, List<BinMarkerEntity> binMarkerEntityList) {
+    private ViewPager2 viewPager2;
+
+    private Fragment[] fragments;
+
+    public MapFragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, List<BinMarkerEntity> binMarkerEntityList, ViewPager2 viewPager2) {
         super(fragmentManager, lifecycle);
         this.binMarkerEntityList = binMarkerEntityList;
+        this.viewPager2 = viewPager2;
+        fragments = new Fragment[2];
+        fragments[0] = new MapFragment(binMarkerEntityList);
+        fragments[1] = new MapListFragment(binMarkerEntityList, viewPager2);
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Log.e("Iron", "Calling createFragment");
-        return switch (position) {
-            case 0 -> new MapFragment(binMarkerEntityList);
-            case 1 -> new MapListFragment(binMarkerEntityList);
-            default -> new MapFragment(binMarkerEntityList);
-        };
+        return fragments[position];
     }
 
     @Override
