@@ -77,11 +77,12 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
 
     private RecyclerView searchResult;
 
-    private final List<BinMarkerEntity> binMarkerEntityList = new ArrayList<>();
+    private List<BinMarkerEntity> binMarkerEntityList;
 
 
-    public MapFragment() {
+    public MapFragment(List<BinMarkerEntity> binMarkerEntityList) {
         super(R.layout.fragment_map);
+        this.binMarkerEntityList = binMarkerEntityList;
     }
 
 
@@ -121,6 +122,7 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
 
         map = view.findViewById(R.id.osmmap);
         map.setTileSource(TileSourceFactory.MAPNIK);
+        map.setUseDataConnection(true);
         map.getMapCenter();
         map.setMultiTouchControls(true);
         map.getLocalVisibleRect(new Rect());
@@ -174,7 +176,7 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
                 BinMarkerEntityAdapter binMarkerEntityAdapter = new BinMarkerEntityAdapter(
                         binMarkerEntityList,
                         myLocationNewOverlay.getMyLocation(),
-                        map
+                        binMarkerEntity -> map.getController().animateTo(binMarkerEntity.getMarker().getPosition())
                 );
                 searchResult.setAdapter(binMarkerEntityAdapter);
                 searchResult.setVisibility(View.VISIBLE);
@@ -276,4 +278,20 @@ public class MapFragment extends Fragment implements MapListener, GpsStatus.List
     public boolean onZoom(ZoomEvent event) {
         return true;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if ( map != null )
+            map.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if ( map != null )
+            map.onPause();
+    }
+
+
 }

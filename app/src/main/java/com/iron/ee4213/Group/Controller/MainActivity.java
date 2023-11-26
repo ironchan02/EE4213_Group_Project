@@ -2,7 +2,6 @@ package com.iron.ee4213.Group.Controller;
 
 import android.os.Bundle;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
-import com.iron.ee4213.Group.Adapter.FragmentAdapter;
+import com.iron.ee4213.Group.Adapter.MainFragmentAdapter;
 import com.iron.ee4213.Group.R;
 
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         toolbar = findViewById(R.id.toolbar);
 
-        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), getLifecycle());
+        MainFragmentAdapter fragmentAdapter = new MainFragmentAdapter(getSupportFragmentManager(), getLifecycle());
         viewPager.setAdapter(fragmentAdapter);
         viewPager.setUserInputEnabled(false);
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {

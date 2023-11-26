@@ -22,12 +22,12 @@ import java.util.List;
 public class BinMarkerEntityAdapter extends RecyclerView.Adapter<BinMarkerEntityAdapter.ViewHolder> {
     private final List<BinMarkerEntity> binMarkerEntityList;
     private final GeoPoint currentLocation;
-    private final MapView map;
+    private final OnItemClickListener clickListener;
 
-    public BinMarkerEntityAdapter(List<BinMarkerEntity> binMarkerEntityList, GeoPoint currentLocation, MapView map) {
+    public BinMarkerEntityAdapter(List<BinMarkerEntity> binMarkerEntityList, GeoPoint currentLocation, OnItemClickListener clickListener) {
         this.binMarkerEntityList = binMarkerEntityList;
         this.currentLocation = currentLocation;
-        this.map = map;
+        this.clickListener = clickListener;
     }
 
 
@@ -41,7 +41,12 @@ public class BinMarkerEntityAdapter extends RecyclerView.Adapter<BinMarkerEntity
     @Override
     public void onBindViewHolder(@NonNull BinMarkerEntityAdapter.ViewHolder holder, int position) {
         BinMarkerEntity binMarkerEntity = binMarkerEntityList.get(position);
-        holder.itemView.setOnClickListener(view -> map.getController().animateTo(binMarkerEntity.getMarker().getPosition()));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickListener.onClick(binMarkerEntity);
+            }
+        });
 
         holder.bind(binMarkerEntity);
     }
@@ -84,5 +89,9 @@ public class BinMarkerEntityAdapter extends RecyclerView.Adapter<BinMarkerEntity
             largeLitter.setVisibility( binMarkerEntity.isAcceptLarge() ? View.VISIBLE : View.GONE );
             litter.setVisibility( binMarkerEntity.isAcceptLitter() ? View.VISIBLE : View.GONE );
         }
+    }
+
+    public interface OnItemClickListener {
+        void onClick(BinMarkerEntity binMarkerEntity);
     }
 }

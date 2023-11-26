@@ -7,12 +7,13 @@ import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.iron.ee4213.Group.Controller.HomeFragment;
+import com.iron.ee4213.Group.Controller.MapContainerFragment;
 import com.iron.ee4213.Group.Controller.MapFragment;
 
-public class FragmentAdapter extends FragmentStateAdapter {
+public class MainFragmentAdapter extends FragmentStateAdapter {
 
 
-    public FragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+    public MainFragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
     }
 
@@ -20,7 +21,7 @@ public class FragmentAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         return switch (position) {
-            case 2 -> new MapFragment();
+            case 2 -> new MapContainerFragment();
             default -> new HomeFragment();
         };
     }
