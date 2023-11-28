@@ -1,5 +1,7 @@
 package com.iron.ee4213.Group.Adapter;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -25,6 +27,7 @@ public class MapFragmentAdapter extends FragmentStateAdapter {
     public MapFragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, List<BinMarkerEntity> binMarkerEntityList, ViewPager2 viewPager2) {
         super(fragmentManager, lifecycle);
         this.binMarkerEntityList = binMarkerEntityList;
+        Log.e("Iron", String.valueOf(this.binMarkerEntityList == null));
         this.viewPager2 = viewPager2;
         fragments = new Fragment[2];
         fragments[0] = new MapFragment(binMarkerEntityList);

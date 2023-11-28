@@ -6,7 +6,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,22 +51,19 @@ public class MapListFragment extends Fragment {
         LocationListener locationListener = (LocationListener) location -> {
             double latitude = location.getLatitude();
             double longitude = location.getLongitude();
-            BinMarkerEntityAdapter binMarkerEntityAdapter = new BinMarkerEntityAdapter(binMarkerEntityList, new GeoPoint(latitude, longitude), new BinMarkerEntityAdapter.OnItemClickListener() {
-                @Override
-                public void onClick(BinMarkerEntity binMarkerEntity) {
-                    MapFragment mapFragment = (MapFragment) ((FragmentStateAdapter)viewPager2.getAdapter()).createFragment(0);
-                    mapFragment.setNav(binMarkerEntity.getMarker().getPosition());
-                    viewPager2.setCurrentItem(0, true);
+            BinMarkerEntityAdapter binMarkerEntityAdapter = new BinMarkerEntityAdapter(binMarkerEntityList, new GeoPoint(latitude, longitude), binMarkerEntity -> {
+                MapFragment mapFragment = (MapFragment) ((FragmentStateAdapter)viewPager2.getAdapter()).createFragment(0);
+                mapFragment.setNav(binMarkerEntity.getMarker().getPosition());
+                viewPager2.setCurrentItem(0, true);
 
-                }
             });
             recycler.setAdapter(binMarkerEntityAdapter);
 
         };
 
-        if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
         }
         return view;
     }

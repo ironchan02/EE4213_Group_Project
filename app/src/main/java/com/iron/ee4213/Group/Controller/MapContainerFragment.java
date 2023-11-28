@@ -29,9 +29,6 @@ public class MapContainerFragment extends Fragment {
         super(R.layout.fragment_map_container);
     }
 
-    public ViewPager2 getMapViewPager() {
-        return mapViewPager;
-    }
 
     @Nullable
     @Override
